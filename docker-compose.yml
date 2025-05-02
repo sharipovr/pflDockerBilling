@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+  backend:
+    build: ./backend
+    container_name: billing_backend
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST: host.docker.internal
+      DB_USER: rustemsharipov
+      DB_PASSWORD: postgres
+      DB_NAME: pfl_docker_billing
+      DB_PORT: 5432
