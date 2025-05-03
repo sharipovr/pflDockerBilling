@@ -25,6 +25,8 @@ func SetupRouter() *gin.Engine {
 
 		api.GET("/users/:id", handlers.GetUserByID)                // теперь принимаем id
 		api.GET("/subscriptions", handlers.GetSubscriptionsByUser) // теперь с фильтрацией по юзер id
+		api.POST("/subscriptions/stripe", handlers.CreateStripeSubscription)
+
 	}
 
 	return router

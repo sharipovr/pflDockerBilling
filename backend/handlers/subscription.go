@@ -2,12 +2,81 @@ package handlers
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/sharipovr/pflDockerBilling/models"
 	"github.com/sharipovr/pflDockerBilling/storage"
 
 	"github.com/gin-gonic/gin"
+	"github.com/stripe/stripe-go/v78"
+	"github.com/stripe/stripe-go/v78/customer"
+	"github.com/stripe/stripe-go/v78/paymentmethod"
+	"github.com/stripe/stripe-go/v78/subscription"
 )
+
+type SubscriptionRequest struct {
+	Email   string `json:"email"`
+	PriceID string `json:"price_id"`
+}
+
+func CreateStripeSubscription(c *gin.Context) {
+	var req SubscriptionRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	stripe.Key = os.Getenv("STRIPE_SECRET_KEY")
+
+	// 1. Создаём Customer
+	cust, err := customer.New(&stripe.CustomerParams{
+		Email: stripe.String(req.Email),
+	})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	// 2. Клонируем Payment Method через Attach (без интерактивных подтверждений!)
+	pm, err := paymentmethod.Attach(
+		"pm_card_visa", // Тестовый метод оплаты
+		&stripe.PaymentMethodAttachParams{
+			Customer: stripe.String(cust.ID),
+		},
+	)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	// 3. Устанавливаем Payment Method дефолтным
+	_, err = customer.Update(cust.ID, &stripe.CustomerParams{
+		InvoiceSettings: &stripe.CustomerInvoiceSettingsParams{
+			DefaultPaymentMethod: stripe.String(pm.ID),
+		},
+	})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	// 4. Создаём подписку
+	subscription, err := subscription.New(&stripe.SubscriptionParams{
+		Customer: stripe.String(cust.ID),
+		Items: []*stripe.SubscriptionItemsParams{
+			{Price: stripe.String(req.PriceID)},
+		},
+	})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusCreated, gin.H{
+		"subscription_id": subscription.ID,
+		"status":          subscription.Status,
+	})
+}
 
 // Создание подписки
 func CreateSubscription(c *gin.Context) {
