@@ -1,7 +1,7 @@
 // components/Dashboard.tsx
 import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
-import { getUser, getUserSubscriptions } from '../services/api';
+import { getUserByEmail, getUserSubscriptions } from '../services/api';
 
 interface User {
   id: number;
@@ -24,13 +24,19 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const userId = 1; // предполагаемый id текущего пользователя
-        const [userResp, subsResp] = await Promise.all([
-          getUser(userId),
-          getUserSubscriptions(userId),
-        ]);
+        const userEmail = localStorage.getItem('userEmail');
+        if (!userEmail) {
+          setError('Пользователь не авторизован.');
+          setLoading(false);
+          return;
+        }
 
+        // Получаем данные пользователя по email
+        const userResp = await getUserByEmail(userEmail);
         setUser(userResp.data);
+
+        // Теперь загружаем подписки по полученному ID пользователя
+        const subsResp = await getUserSubscriptions(userResp.data.ID);
         setSubscriptions(subsResp.data);
       } catch (err) {
         console.error(err);

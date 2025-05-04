@@ -14,3 +14,8 @@ export const getUser = async (userId: number) => {
 export const getUserSubscriptions = async (userId: number) => {
   return apiClient.get(`/api/subscriptions?user_id=${userId}`);
 };
+
+// Загружаем данные пользователя по email
+export const getUserByEmail = (email: string) => {
+  return apiClient.get(`/api/users/email/${email}`);
+};

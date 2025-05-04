@@ -28,6 +28,7 @@ func SetupRouter() *gin.Engine {
 		api.POST("/subscriptions/stripe", handlers.CreateStripeSubscription)
 
 		api.POST("/webhooks/stripe", handlers.HandleStripeWebhook)
+		api.GET("/users/email/:email", handlers.GetUserByEmail)
 	}
 
 	return router

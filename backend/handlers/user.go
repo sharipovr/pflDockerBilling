@@ -39,3 +39,13 @@ func GetUserByID(c *gin.Context) {
 
 	c.JSON(http.StatusOK, user)
 }
+
+func GetUserByEmail(c *gin.Context) {
+	email := c.Param("email")
+	var user models.User
+	if err := storage.DB.Where("email = ?", email).First(&user).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+		return
+	}
+	c.JSON(http.StatusOK, user)
+}

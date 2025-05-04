@@ -10,6 +10,8 @@ const Login: React.FC = () => {
     e.preventDefault();
     // Тут заглушка авторизации без реальной проверки
     if (username && password) {
+      // Сохраняем email (username) в localStorage перед редиректом
+      localStorage.setItem('userEmail', username);
       navigate('/dashboard');
     }
   };
