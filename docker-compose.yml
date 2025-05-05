@@ -10,6 +10,7 @@ services:
       postgres:
         condition: service_healthy
     environment:
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
       DB_HOST: postgres
       DB_USER: postgres
       DB_PASSWORD: postgres

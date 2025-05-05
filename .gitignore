@@ -1,3 +1,4 @@
 *.md
 stripe/pub.key
 stripe/sec.key
+.env
