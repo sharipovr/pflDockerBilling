@@ -12,7 +12,6 @@ services:
       DB_USER: postgres
       DB_PASSWORD: postgres
       DB_NAME: pfl_docker_billing
-      DB_PORT: 5432
       FRONTEND_URL: ${FRONTEND_URL}
     # убираем depends_on, если база данных запускается отдельно!
 
