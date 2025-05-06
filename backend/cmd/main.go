@@ -13,6 +13,6 @@ func main() {
 	router := routes.SetupRouter()
 
 	if err := router.Run(":8080"); err != nil {
-		log.Fatal("Ошибка запуска сервера: ", err)
+		log.Fatal("Ошибка запуска сервера:: ", err)
 	}
 }

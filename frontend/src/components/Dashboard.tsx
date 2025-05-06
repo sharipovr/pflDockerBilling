@@ -26,7 +26,7 @@ const Dashboard: React.FC = () => {
       try {
         const userEmail = localStorage.getItem('userEmail');
         if (!userEmail) {
-          setError('Пользователь не авторизован.');
+          setError('Пользователь не авторизован!');
           setLoading(false);
           return;
         }
