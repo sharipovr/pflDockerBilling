@@ -1,6 +1,8 @@
 package routes
 
 import (
+	"os"
+
 	"github.com/gin-contrib/cors"
 	"github.com/sharipovr/pflDockerBilling/handlers"
 
@@ -11,7 +13,7 @@ func SetupRouter() *gin.Engine {
 	router := gin.Default()
 	// Настройка CORS middleware
 	router.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"http://localhost:5173"}, // адрес твоего фронтенда
+		AllowOrigins: []string{os.Getenv("FRONTEND_URL")}, // адрес твоего фронтенда
 		AllowMethods: []string{"GET", "POST", "PUT", "DELETE"},
 		AllowHeaders: []string{"Origin", "Content-Type"},
 	}))
