@@ -1,4 +1,8 @@
-*.md
-stripe/pub.key
-stripe/sec.key
+/Plan/*
+/stripe/*
+*.key
 .env
+frontend/README.md
+README.old
+.gitignore
+README_ru.md
