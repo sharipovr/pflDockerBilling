@@ -2,8 +2,7 @@ version: '3.9'
 
 services:
   backend:
-    build: 
-      context: ./backend
+    build: ./backend
     container_name: billing_backend
     ports:
       - "8080:8080"
