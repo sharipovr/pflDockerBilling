@@ -5,8 +5,6 @@ services:
     build: 
       context: .                  # контекст — вся папка проекта
       dockerfile: backend/Dockerfile  # путь к Dockerfile
-    env_file:
-      - .env.docker
     container_name: billing_backend
     ports:
       - "8080:8080"
