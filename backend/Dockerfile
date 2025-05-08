@@ -11,8 +11,6 @@ RUN go mod download
 # Копируем исходный код
 COPY backend/. .
 
-COPY .env.docker .env.docker
-
 # Сборка приложения
 RUN go build -o pflDockerBilling ./cmd/main.go
 
