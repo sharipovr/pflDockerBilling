@@ -2,21 +2,20 @@ version: '3.9'
 
 services:
   backend:
-    build: ./backend
+    build: 
+      context: .                  # контекст — вся папка проекта
+      dockerfile: backend/Dockerfile  # путь к Dockerfile
+    env_file:
+      - .env.docker
     container_name: billing_backend
     ports:
       - "8080:8080"
-    environment:
-      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
-      DB_HOST: ${DB_HOST}
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-      DB_NAME: pfl_docker_billing
-      FRONTEND_URL: ${FRONTEND_URL}
-    # убираем depends_on, если база данных запускается отдельно!
 
   frontend:
-    build: ./frontend
+    build: 
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL}
     container_name: billing_frontend
     ports:
       - "5173:80"

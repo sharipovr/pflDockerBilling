@@ -10,8 +10,11 @@ import (
 
 func main() {
 	// Загружаем переменные окружения из файла .env
-	if err := godotenv.Load("../.env"); err != nil {
-		log.Println("Файл .env не найден, используются переменные окружения системы")
+	if err := godotenv.Load("../.env.local"); err != nil {
+		log.Println("Файл .env.local не найден, используются переменные окружения системы")
+		if err := godotenv.Load(".env.docker"); err != nil {
+			log.Println("Файл .env.docker не найден, используются переменные окружения системы")
+		}
 	}
 	storage.Init()
 

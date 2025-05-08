@@ -6,3 +6,10 @@ frontend/README.md
 README.old
 .gitignore
 README_ru.md
+.env.docker
+.env.local
+frontend/.env.production
+frontend/.env.production
+.env.docker.local
+.env.docker.prod
+frontend/.env.production

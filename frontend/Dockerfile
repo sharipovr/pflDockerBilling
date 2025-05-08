@@ -13,6 +13,10 @@ RUN npm install
 # Копируем все исходники проекта
 COPY . .
 
+# Принимаем build-time аргумент и устанавливаем env-переменную
+ARG VITE_API_BASE_URL
+ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
+
 # Выполняем сборку TypeScript + Vite
 RUN npm run build
 

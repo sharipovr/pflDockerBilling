@@ -5,11 +5,13 @@ FROM golang:1.23-alpine
 WORKDIR /app
 
 # Копируем файлы модулей Go и устанавливаем зависимости
-COPY go.mod go.sum ./
+COPY backend/go.mod backend/go.sum ./
 RUN go mod download
 
 # Копируем исходный код
-COPY . .
+COPY backend/. .
+
+COPY .env.docker .env.docker
 
 # Сборка приложения
 RUN go build -o pflDockerBilling ./cmd/main.go
