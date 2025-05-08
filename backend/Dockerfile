@@ -9,7 +9,7 @@ COPY backend/go.mod backend/go.sum ./
 RUN go mod download
 
 # Копируем исходный код
-COPY backend/. .
+COPY . .
 
 # Сборка приложения
 RUN go build -o pflDockerBilling ./cmd/main.go
