@@ -4,7 +4,6 @@ services:
   backend:
     build: 
       context: ./backend
-      dockerfile: Dockerfile
     container_name: billing_backend
     ports:
       - "8080:8080"
