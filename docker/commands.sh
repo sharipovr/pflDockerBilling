@@ -12,3 +12,4 @@ docker compose -f docker-compose.app.yml --env-file .env.docker.local up -d --bu
 
 # Запуск контейнера на сервере Linode (фронтенд будет обращаться к удалённому IP):
 docker compose -f docker-compose.app.yml --env-file .env.docker.prod up -d --build
+

@@ -13,3 +13,5 @@ frontend/.env.production
 .env.docker.local
 .env.docker.prod
 frontend/.env.production
+docker/commands.sh
+

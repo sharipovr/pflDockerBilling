@@ -70,4 +70,5 @@ jobs:
 
             docker run -d --name billing_frontend \
               -p 5173:80 \
+              -e VITE_API_BASE_URL={{ secrets.VITE_API_BASE_URL }} \
               rustemsharipov/pfl_docker_billing_frontend:latest
