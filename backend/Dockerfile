@@ -5,7 +5,7 @@ FROM golang:1.23-alpine
 WORKDIR /app
 
 # Копируем файлы модулей Go и устанавливаем зависимости
-COPY backend/go.mod backend/go.sum ./
+COPY go.mod go.sum ./
 RUN go mod download
 
 # Копируем исходный код
