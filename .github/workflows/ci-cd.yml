@@ -41,6 +41,8 @@ jobs:
         with:
           context: ./frontend
           push: true
+          build-args: |
+            VITE_API_BASE_URL=http://${{ secrets.SERVER_HOST }}:8080
           tags: rustemsharipov/pfl_docker_billing_frontend:latest
 
       - name: Deploy via SSH
@@ -70,5 +72,4 @@ jobs:
 
             docker run -d --name billing_frontend \
               -p 5173:80 \
-              -e VITE_API_BASE_URL=http://172.234.232.238:8080 \
               rustemsharipov/pfl_docker_billing_frontend:latest
