@@ -66,9 +66,9 @@ jobs:
               -p 8080:8080 \
               -e STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }} \
               -e DB_HOST=billing_postgres \
-              -e DB_USER={{ secrets.DB_USER }} \
-              -e DB_PASSWORD={{ secrets.DB_PASSWORD }} \
-              -e DB_NAME={{ secrets.DB_NAME }} \
+              -e DB_USER=${{ secrets.DB_USER }} \
+              -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+              -e DB_NAME=${{ secrets.DB_NAME }} \
               -e FRONTEND_URL=http://${{ secrets.SERVER_HOST }}:5173 \
               rustemsharipov/pfl_docker_billing_backend:latest
 
